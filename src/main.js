@@ -154,3 +154,35 @@ tl.from('.greeting', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 1, ease
   .from('.summary', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 1, ease: 'power3.out' }, '-=0.6')
   .from('.cta-buttons a', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 0.8, stagger: 0.15, ease: 'power3.out' }, '-=0.4')
   .from('.hero-image', { opacity: 0, scale: 0.9, filter: 'blur(10px)', duration: 1.5, ease: 'power3.out' }, 0.6);
+
+// --- MOBILE NAVIGATION TOGGLE ---
+const menuBtn = document.querySelector('.mobile-menu-btn');
+const mobileNav = document.querySelector('.mobile-nav-overlay');
+const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+
+if (menuBtn && mobileNav) {
+  const menuIcon = menuBtn.querySelector('i');
+
+  // Toggle menu on button click
+  menuBtn.addEventListener('click', () => {
+    mobileNav.classList.toggle('active');
+    
+    // Toggle icon between bars and times (X)
+    if (mobileNav.classList.contains('active')) {
+      menuIcon.classList.remove('fa-bars');
+      menuIcon.classList.add('fa-times');
+    } else {
+      menuIcon.classList.remove('fa-times');
+      menuIcon.classList.add('fa-bars');
+    }
+  });
+
+  // Close menu when a link is clicked
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.remove('active');
+      menuIcon.classList.remove('fa-times');
+      menuIcon.classList.add('fa-bars');
+    });
+  });
+}
