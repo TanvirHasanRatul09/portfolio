@@ -153,4 +153,4 @@ tl.from('.greeting', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 1, ease
   .from('.title', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 1, ease: 'power3.out' }, '-=0.6')
   .from('.summary', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 1, ease: 'power3.out' }, '-=0.6')
   .from('.cta-buttons a', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 0.8, stagger: 0.15, ease: 'power3.out' }, '-=0.4')
-  .from('.hero-image', { opacity: 0, scale: 0.9, filter: 'blur(10px)', duration: 1.5, ease: 'power3.out' }, '-=1');
+  .from('.hero-image', { opacity: 0, scale: 0.9, filter: 'blur(10px)', duration: 1.5, ease: 'power3.out' }, 0.6);
