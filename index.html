@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tanvir Hasan Ratul | Portfolio</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Outfit:wght@400;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="bg-gradient"></div>
+  <canvas id="bg-canvas"></canvas>
+
+  <nav>
+    <div class="logo">RATUL</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#leetcode">Problem Solving</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <main id="app">
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <p class="greeting">print("Hi, I'm")</p>
+          <h1 class="name">Tanvir Hasan <span>Ratul</span></h1>
+          <h2 class="title">Software Engineering / Backend Developer</h2>
+          <p class="summary">Experienced building FastAPI backends, relational-database-driven applications, and Python data tools.</p>
+          <div class="cta-buttons">
+            <a href="#projects" class="btn primary">View Projects</a>
+            <a href="#contact" class="btn secondary">Get in Touch</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="profile-pic-container">
+            <img src="./solo pic.jpeg" alt="Tanvir Hasan Ratul" class="profile-pic" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about hidden">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-grid">
+          <div class="about-text glass-card">
+            <p>Computer Science undergraduate seeking a Software Engineering / Backend Developer internship. I am
+              comfortable with REST API design, SQL, and object-oriented programming.</p>
+            <div class="education">
+              <h3>Education</h3>
+              <div class="edu-item">
+                <h4>Ahsanullah University of Science and Technology (AUST)</h4>
+                <p>B.Sc. in Computer Science and Engineering (CSE)</p>
+                <span>3rd Year, 2nd Semester | CGPA: 3.223 / 4.00</span>
+              </div>
+              <div class="edu-item">
+                <h4>St. Joseph Higher Secondary School & College</h4>
+                <p>HSC — GPA: 5.00 / 5.00</p>
+              </div>
+              <div class="edu-item">
+                <h4>Narayanganj Ideal School</h4>
+                <p>SSC — GPA: 5.00 / 5.00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills hidden">
+      <div class="container">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-card glass-card">
+            <h3>Languages</h3>
+            <p>Python, SQL, C++</p>
+          </div>
+          <div class="skill-card glass-card">
+            <h3>Backend & APIs</h3>
+            <p>FastAPI, REST APIs, SQLite, SQL Server (SSMS), pyodbc</p>
+          </div>
+          <div class="skill-card glass-card">
+            <h3>Data & Tools</h3>
+            <p>Pandas, Streamlit, Power BI, Power Query, Excel, Git/GitHub</p>
+          </div>
+          <div class="skill-card glass-card">
+            <h3>Core CS</h3>
+            <p>Object-Oriented Programming, Data Structures & Algorithms</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects hidden">
+      <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card glass-card">
+            <h3>Office Watch</h3>
+            <div class="tech-stack">
+              <span>Python</span> <span>FastAPI</span> <span>SQLite</span> <span>WebSockets</span> <span>JavaScript</span>
+            </div>
+            <p>A real-time monitoring system to track office energy consumption. Built a FastAPI backend acting as the single source of truth for a live web dashboard and a separate Discord bot.</p>
+            <a href="https://github.com/TanvirHasanRatul09/office_watch" target="_blank" class="project-link mt-4">View on GitHub &rarr;</a>
+          </div>
+          <div class="project-card glass-card">
+            <h3>Internship Application Tracker</h3>
+            <div class="tech-stack">
+              <span>Python</span> <span>SQL Server</span> <span>pyodbc</span> <span>OOP</span>
+            </div>
+            <p>A centralized system to organize and track internship applications. Designed a relational schema in SQL Server and built a Python data-access layer using pyodbc.</p>
+            <a href="https://github.com/TanvirHasanRatul09/Internship_Tracker" target="_blank" class="project-link mt-4">View on GitHub &rarr;</a>
+          </div>
+          <div class="project-card glass-card">
+            <h3>Weather Dashboard</h3>
+            <div class="tech-stack">
+              <span>Python</span> <span>REST API</span> <span>Pandas</span> <span>Streamlit</span>
+            </div>
+            <p>A live forecasting tool to check real-time weather conditions. Built an interactive Streamlit dashboard fetching data from OpenWeatherMap.</p>
+            <a href="https://github.com/TanvirHasanRatul09/weatherDashboard" target="_blank" class="project-link mt-4">View on GitHub &rarr;</a>
+          </div>
+          <div class="project-card glass-card">
+            <h3>Football Player Performance Dashboard</h3>
+            <div class="tech-stack">
+              <span>SQL Server</span> <span>Power BI</span> <span>Excel</span>
+            </div>
+            <p>A data visualization dashboard to analyze football player career statistics and performance metrics using SQL Server and Power BI.</p>
+            <a href="https://github.com/TanvirHasanRatul09/cristiano-ronaldo-dashboard" target="_blank" class="project-link mt-4">View on GitHub &rarr;</a>
+          </div>
+          <div class="project-card glass-card">
+            <h3>FootballTransfer</h3>
+            <div class="tech-stack">
+              <span>Excel</span> <span>Power Query</span> <span>SQL</span> <span>Power BI</span>
+            </div>
+            <p>An analytics project to track and visualize historical football transfer market trends and player movements.</p>
+            <a href="https://github.com/TanvirHasanRatul09/FootballTransfer" target="_blank" class="project-link mt-4">View on GitHub &rarr;</a>
+          </div>
+          <div class="project-card glass-card">
+            <h3>Medicamp</h3>
+            <div class="tech-stack">
+              <span>GitHub</span>
+            </div>
+            <p>A management system to streamline patient registration, consultations, and medical records during health camps.</p>
+            <a href="https://github.com/TanvirHasanRatul09/medicamp" target="_blank" class="project-link mt-4">View on GitHub &rarr;</a>
+          </div>
+          <div class="project-card glass-card">
+            <h3>Occupai</h3>
+            <div class="tech-stack">
+              <span>Python</span> <span>React</span> <span>Computer Vision</span>
+            </div>
+            <p>An AI-powered computer vision application for real-time room occupancy tracking and spatial analysis.</p>
+            <a href="https://github.com/TanvirHasanRatul09/occupai" target="_blank" class="project-link mt-4">View on GitHub &rarr;</a>
+          </div>
+          <div class="project-card glass-card">
+            <h3>The Menu</h3>
+            <div class="tech-stack">
+              <span>GitHub</span>
+            </div>
+            <p>A digital restaurant menu application designed for seamless food browsing and order management.</p>
+            <a href="https://github.com/TanvirHasanRatul09/the-menu" target="_blank" class="project-link mt-4">View on GitHub &rarr;</a>
+          </div>
+          <div class="project-card glass-card">
+            <h3>Oggatonama</h3>
+            <div class="tech-stack">
+              <span>Web Development</span>
+            </div>
+            <p>A collaborative platform designed to help find missing persons and identify unidentified bodies.</p>
+            <a href="https://github.com/PanthaProtick/oggatonama_web" target="_blank" class="project-link mt-4">View on GitHub &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LeetCode Section -->
+    <section id="leetcode" class="leetcode hidden">
+      <div class="container">
+        <h2 class="section-title">Problem Solving</h2>
+        <div class="leetcode-content glass-card">
+          <h3>LeetCode Profile</h3>
+          <p>Active participant in algorithmic problem solving and data structure optimization.</p>
+          <a href="https://leetcode.com/u/Destro69/" target="_blank" class="btn primary">View LeetCode Profile (Destro69)</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications & Activities Section -->
+    <section id="certifications" class="certifications hidden">
+      <div class="container">
+        <h2 class="section-title">Certifications & Activities</h2>
+        <div class="certifications-grid">
+          <div class="certifications glass-card">
+            <h3>Leadership & Activities</h3>
+            <ul>
+              <li>Deputy Coordinator, Department of Publication — AUST PIC</li>
+              <li>Member, Josephite Math Club</li>
+            </ul>
+            <h3 class="mt-4">Certifications</h3>
+            <ul>
+              <li>Google Prompting Essentials Specialization — Coursera</li>
+              <li>Data Analytics course with Excel | Power BI | Python | SQL — Tutorials POINT BANGLADESH</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact hidden">
+      <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-grid">
+          <div class="contact-info glass-card">
+            <p>Narayanganj, Dhaka, Bangladesh</p>
+            <p>01608776259</p>
+            <a href="mailto:tanvirhasan58p@gmail.com" class="link">tanvirhasan58p@gmail.com</a>
+            
+            <div class="social-links">
+              <a href="https://github.com/TanvirHasanRatul09" target="_blank" class="social-icon" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/tanvirhasanratul" target="_blank" class="social-icon" aria-label="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="https://www.facebook.com/tanvirhasan.ratul.1" target="_blank" class="social-icon" aria-label="Facebook">
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="https://wa.me/8801608776259" target="_blank" class="social-icon" aria-label="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Tanvir Hasan Ratul. Built with HTML, CSS & Three.js.</p>
+    </footer>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
