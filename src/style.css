@@ -131,7 +131,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   z-index: 100;
-  background: rgba(9, 9, 11, 0.7);
+  background: rgba(9, 9, 11, 0.3); /* Made more transparent */
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-subtle);
 }
