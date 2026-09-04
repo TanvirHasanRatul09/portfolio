@@ -35,10 +35,10 @@ for (let i = 0; i < particlesCount * 3; i++) {
 particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
 const material = new THREE.PointsMaterial({
-  size: 0.15,
-  color: 0xfacc15, // Vibrant Yellow
+  size: 0.25, /* Increased size for mobile visibility */
+  color: 0x7e22ce, /* Deep Purple to match theme */
   transparent: true,
-  opacity: 0.6,
+  opacity: 0.8,
   blending: THREE.AdditiveBlending
 });
 

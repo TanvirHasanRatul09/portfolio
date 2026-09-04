@@ -8,9 +8,9 @@
   --text-secondary: #e2e8f0; /* Brighter Slate */
   --text-muted: #cbd5e1; /* Slate 300 */
   
-  --accent-primary: #be123c; /* Premium Maroon */
-  --accent-secondary: #c084fc; /* Vibrant Purple */
-  --accent-glow: rgba(190, 18, 60, 0.15);
+  --accent-primary: #9f1239; /* Dark Maroon */
+  --accent-secondary: #7e22ce; /* Deep Purple */
+  --accent-glow: rgba(159, 18, 57, 0.15);
   
   --border-subtle: #27272a;
   --border-strong: #3f3f46;
@@ -60,11 +60,13 @@ h1, h2, h3, h4, .logo {
 .bg-gradient::after {
   content: '';
   position: absolute;
-  width: 50vw;
-  height: 50vw;
+  width: 70vw;
+  height: 70vw;
+  max-width: 800px;
+  max-height: 800px;
   border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.35;
+  filter: blur(80px);
+  opacity: 0.65;
   animation: auroraFloat 12s infinite alternate ease-in-out;
   pointer-events: none;
 }
@@ -80,6 +82,7 @@ h1, h2, h3, h4, .logo {
   bottom: -10%;
   right: -10%;
   animation-delay: -10s;
+  opacity: 0.4; /* Decreased highlight */
 }
 
 @keyframes auroraFloat {
@@ -98,7 +101,7 @@ h1, h2, h3, h4, .logo {
   height: 100vh;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.3; /* subtle particles */
+  opacity: 0.7; /* increased particle visibility */
 }
 
 /* Navigation */
@@ -337,7 +340,9 @@ section {
 
 /* Glassmorphism Cards -> Developer Cards */
 .glass-card {
-  background: var(--bg-secondary);
+  background: rgba(24, 24, 27, 0.5); /* Translucent zinc-900 */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
   padding: 2.5rem;
