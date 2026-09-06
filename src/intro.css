@@ -1,0 +1,436 @@
+/* 
+ * Cinematic Intro Styles - Module 1 (Workspace Scene)
+ * Isolated from the main portfolio styles to avoid layout breaks.
+ */
+
+#cinematic-intro {
+  width: 100%;
+  height: 100vh;
+  position: absolute; /* absolute so it doesn't push the hero down in flow */
+  top: 0;
+  left: 0;
+  z-index: 9999; /* Must be higher than the real navbar's z-index (100) */
+  overflow: hidden;
+  background: #020204;
+}
+
+.cinematic-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  overflow: hidden;
+  padding: 0 !important;
+  background-color: #030305; /* Deepest dark */
+}
+
+.cinematic-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  perspective: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cinematic-camera {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Will be animated by GSAP: transform: translateZ(...) */
+}
+
+.cinematic-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* 1. Background & Room */
+.cinematic-layer.background {
+  z-index: 1;
+  background: radial-gradient(circle at 50% 40%, #0a0a12 0%, #030305 70%);
+}
+
+.cinematic-layer.room {
+  z-index: 2;
+  opacity: 0.15;
+}
+
+.window-blind-shadows {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: repeating-linear-gradient(
+    160deg,
+    transparent,
+    transparent 40px,
+    #000 40px,
+    #000 80px
+  );
+  filter: blur(10px);
+  transform: translateZ(-200px);
+  animation: ambientMove 20s infinite alternate ease-in-out;
+}
+
+@keyframes ambientMove {
+  0% { transform: translateZ(-200px) translateY(0); }
+  100% { transform: translateZ(-200px) translateY(-5px); }
+}
+
+/* 2. Desk */
+.cinematic-layer.desk {
+  z-index: 3;
+}
+
+.desk-surface {
+  position: absolute;
+  bottom: 0;
+  width: 120%;
+  left: -10%;
+  height: 25vh;
+  background: 
+    radial-gradient(ellipse at 25% 10%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+    linear-gradient(to bottom, #0d0d12 0%, #050508 100%);
+  border-top: 2px solid #1a1a24;
+  box-shadow: 0 -20px 60px rgba(0,0,0,0.8);
+  transform: translateZ(100px);
+}
+
+.keyboard {
+  position: absolute;
+  bottom: 8vh;
+  left: 50%;
+  transform: translateX(-50%) translateZ(150px) rotateX(60deg);
+  width: 300px;
+  height: 100px;
+  background: #08080a;
+  border-radius: 4px;
+  border: 1px solid #1a1a24;
+  box-shadow: inset 0 2px 10px rgba(255,255,255,0.02), 0 10px 20px rgba(0,0,0,0.9);
+}
+
+.mouse {
+  position: absolute;
+  bottom: 8vh;
+  left: calc(50% + 200px);
+  transform: translateZ(150px) rotateX(60deg);
+  width: 50px;
+  height: 80px;
+  background: #08080a;
+  border-radius: 25px;
+  border: 1px solid #1a1a24;
+  box-shadow: inset 0 2px 10px rgba(255,255,255,0.02), 0 10px 20px rgba(0,0,0,0.9);
+}
+
+/* 3. Monitor */
+.cinematic-layer.monitor {
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateZ(50px);
+}
+
+.monitor-stand {
+  position: absolute;
+  bottom: 25vh;
+  width: 120px;
+  height: 15px;
+  background: #111116;
+  border-top: 1px solid #2a2a35;
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.9);
+}
+
+.monitor-neck {
+  position: absolute;
+  bottom: 25vh;
+  width: 40px;
+  height: 80px;
+  background: linear-gradient(to right, #08080a, #1a1a24, #08080a);
+}
+
+.monitor-wrapper {
+  position: absolute;
+  bottom: calc(25vh + 60px);
+  width: 70vw;
+  max-width: 800px;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.monitor-frame {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #050508;
+  border-radius: 8px;
+  border: 2px solid #1a1a24;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 100px rgba(126, 34, 206, 0.15); /* Purple ambient */
+}
+
+.cinematic-screen {
+  position: absolute;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  background: #020204;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,1);
+  z-index: 2;
+  transform-origin: center center;
+}
+
+.screen-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(126, 34, 206, 0.3) 0%, rgba(159, 18, 57, 0.1) 100%);
+  filter: blur(8px);
+  animation: screenPulse 4s infinite alternate ease-in-out;
+}
+
+@keyframes screenPulse {
+  0% { opacity: 0.85; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.02); }
+}
+
+/* 4. Lamp */
+.cinematic-layer.lamp {
+  z-index: 5;
+  transform: translateZ(200px);
+}
+
+.lamp-base {
+  position: absolute;
+  bottom: 25vh;
+  left: 15vw;
+  width: 60px;
+  height: 10px;
+  background: #08080a;
+  border-radius: 5px 5px 0 0;
+}
+
+.lamp-arm {
+  position: absolute;
+  bottom: 25vh;
+  left: calc(15vw + 25px);
+  width: 8px;
+  height: 150px;
+  background: #111116;
+  transform-origin: bottom center;
+  transform: rotate(15deg);
+}
+
+.lamp-head {
+  position: absolute;
+  bottom: calc(25vh + 140px);
+  left: calc(15vw + 10px);
+  width: 80px;
+  height: 30px;
+  background: #050508;
+  border-radius: 15px 15px 0 0;
+  transform: rotate(30deg);
+  box-shadow: inset 0 -2px 10px rgba(245, 158, 11, 0.2);
+}
+
+.lamp-beam {
+  position: absolute;
+  bottom: 25vh;
+  left: calc(15vw - 100px);
+  width: 400px;
+  height: 250px;
+  background: radial-gradient(ellipse at top, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+  clip-path: polygon(40% 0, 60% 0, 100% 100%, 0% 100%);
+  transform-origin: top center;
+  transform: translateY(-135px) rotate(30deg);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: lampFlicker 8s infinite alternate ease-in-out;
+}
+
+@keyframes lampFlicker {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+  25%, 75% { opacity: 0.9; }
+}
+
+/* 5. Person */
+.cinematic-layer.person {
+  z-index: 6;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transform: translateZ(300px);
+  pointer-events: none;
+}
+
+.person-silhouette {
+  width: 40vw;
+  max-width: 450px;
+  min-width: 300px;
+  margin-bottom: -5vh; /* slightly cut off at bottom */
+  margin-right: -20vw; /* slightly off center to the right */
+  filter: drop-shadow(-10px 0 20px rgba(126, 34, 206, 0.15)) drop-shadow(10px 0 20px rgba(245, 158, 11, 0.05));
+}
+
+/* 6. Terminal Placeholder UI */
+.terminal-placeholder {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: rgba(9, 9, 11, 0.85); /* Slightly transparent dark background */
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.terminal-header {
+  padding: 10px 15px;
+  background: rgba(24, 24, 27, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-header .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.terminal-header .dot.close { background: #ef4444; }
+.terminal-header .dot.minimize { background: #eab308; }
+.terminal-header .dot.maximize { background: #22c55e; }
+
+.terminal-body {
+  padding: 15px;
+  color: #a1a1aa; /* subtle gray */
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 1.1rem;
+  overflow: hidden;
+}
+.term-line {
+  margin: 4px 0;
+  display: block;
+  opacity: 1;
+}
+.terminal-body .prompt { color: #7e22ce; font-weight: 600; }
+.terminal-body .cmd { color: #e2e8f0; }
+
+.type-text {
+  display: inline-block;
+  vertical-align: bottom;
+  width: auto;
+}
+
+.vite-green { color: #22c55e; font-weight: bold; }
+.vite-label { font-weight: bold; color: #e2e8f0; }
+.vite-url { color: #3b82f6; text-decoration: underline; }
+.term-success { color: #22c55e; font-weight: bold; margin-top: 8px;}
+.term-highlight { color: #eab308; font-weight: bold; margin-top: 8px;}
+.term-identity {
+  font-size: 2.2rem;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(126, 34, 206, 0.8);
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+.terminal-body .cursor { 
+  display: inline-block;
+  width: 10px;
+  height: 1.1rem;
+  background-color: #e2e8f0;
+  animation: blink 1s step-end infinite; 
+  vertical-align: text-bottom;
+  margin-left: 5px;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* 7. Screen Content (Iframe) */
+.portfolio-iframe-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  border: none;
+  pointer-events: none; /* Disable interaction during cinematic intro */
+  transform-origin: top left;
+  /* Remove scrollbars to make it look like a clean screen */
+  scrollbar-width: none; 
+}
+.portfolio-iframe::-webkit-scrollbar {
+  display: none;
+}
+
+.screen-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(2, 2, 4, 0.4); /* Darkens the iframe to simulate screen brightness in a dark room */
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .monitor-wrapper {
+    width: 90vw;
+    bottom: calc(30vh + 30px);
+  }
+  .monitor-stand, .monitor-neck {
+    bottom: 30vh;
+  }
+  .keyboard, .mouse {
+    display: none; /* Simplify on mobile */
+  }
+  .lamp-base, .lamp-arm, .lamp-head, .lamp-beam {
+    left: 5vw; /* move closer in */
+  }
+  .person-silhouette {
+    width: 70vw;
+    margin-right: -10vw;
+  }
+}

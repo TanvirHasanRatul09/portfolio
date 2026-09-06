@@ -1,9 +1,27 @@
 import './style.css';
+import './intro.css';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Initialize Cinematic Intro Module
+import { initCinematicIntro } from './intro.js';
+
+// Check if we are inside the iframe monitor
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('intro') === 'false') {
+  // Hide the cinematic intro entirely and don't initialize GSAP for it
+  const introEl = document.getElementById('cinematic-intro');
+  if (introEl) introEl.style.display = 'none';
+  
+  // Hide scrollbars so the miniature portfolio looks clean inside the monitor
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
+} else {
+  initCinematicIntro();
+}
 
 // --- THREE.JS BACKGROUND SETUP ---
 const canvas = document.querySelector('#bg-canvas');
