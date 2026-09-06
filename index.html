@@ -45,7 +45,7 @@
 
   <main id="app">
     <!-- Cinematic Intro Section -->
-    <section id="cinematic-intro" class="cinematic-container">
+    <section id="cinematic-intro" class="cinematic-container" aria-hidden="true">
       <div class="cinematic-scene">
         <div class="cinematic-camera">
           <div class="cinematic-layer background"></div>
@@ -98,7 +98,7 @@
                   </div>
                 </div>
                 <div class="portfolio-iframe-container" style="opacity: 0;">
-                  <iframe src="/?intro=false" class="portfolio-iframe" tabindex="-1"></iframe>
+                  <iframe src="/?intro=false" class="portfolio-iframe" tabindex="-1" loading="lazy"></iframe>
                   <div class="screen-overlay"></div>
                 </div>
               </div>
@@ -122,8 +122,7 @@
           </div>
         </div>
       </div>
-      <div class="cinematic-terminal"></div>
-      <div class="cinematic-transition"></div>
+
     </section>
 
     <!-- Hero Section -->

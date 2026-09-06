@@ -40,9 +40,9 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-// Particles / Data Nodes
+// Particles / Data Nodes — fewer on mobile to save GPU
 const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = 700;
+const particlesCount = window.innerWidth <= 768 ? 200 : 700;
 const posArray = new Float32Array(particlesCount * 3);
 
 for (let i = 0; i < particlesCount * 3; i++) {
