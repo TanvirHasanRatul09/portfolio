@@ -63,26 +63,28 @@ export function initCinematicIntro() {
   }
 
   // ==========================================
-  // Iframe Scale Logic (desktop only)
-  // On mobile, the iframe is completely removed to avoid loading a second
-  // copy of Three.js + GSAP + the entire portfolio — the #1 lag cause.
+  // Iframe Scale Logic
+  // On mobile, render at 640×360 instead of 1920×1080 to massively reduce GPU load.
+  // The monitor screen is tiny on mobile, so this resolution is more than enough.
   // ==========================================
   const iframeContainer = document.querySelector('.portfolio-iframe-container');
   const iframeEl = document.querySelector('.portfolio-iframe');
+  const iframeBaseWidth = isMobile ? 640 : 1920;
+  const iframeBaseHeight = isMobile ? 360 : 1080;
 
-  if (isMobile) {
-    // Remove the iframe entirely on mobile to prevent double-loading the site
-    if (iframeEl) iframeEl.remove();
-  } else {
-    function updateIframeScale() {
-      if (iframeContainer && iframeEl) {
-        const scale = iframeContainer.clientWidth / 1920;
-        iframeEl.style.transform = `scale(${scale})`;
-      }
-    }
-    window.addEventListener('resize', updateIframeScale, { passive: true });
-    updateIframeScale();
+  if (iframeEl) {
+    iframeEl.style.width = iframeBaseWidth + 'px';
+    iframeEl.style.height = iframeBaseHeight + 'px';
   }
+
+  function updateIframeScale() {
+    if (iframeContainer && iframeEl) {
+      const scale = iframeContainer.clientWidth / iframeBaseWidth;
+      iframeEl.style.transform = `scale(${scale})`;
+    }
+  }
+  window.addEventListener('resize', updateIframeScale, { passive: true });
+  updateIframeScale();
 
   // ==========================================
   // GSAP ScrollTrigger Camera Sequence
@@ -129,7 +131,7 @@ export function initCinematicIntro() {
 
   // Phase 1: Terminal fades out, portfolio interface fades in on the monitor
   tl.to(terminal, { autoAlpha: 0, duration: 1.5, ease: 'power1.inOut' });
-  if (!isMobile && iframeContainer) {
+  if (iframeContainer) {
     tl.to(iframeContainer, { opacity: 1, duration: 1.5, ease: 'power1.inOut' }, '<0.5');
   }
 
