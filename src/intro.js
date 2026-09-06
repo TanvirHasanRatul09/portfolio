@@ -97,6 +97,20 @@ export function initCinematicIntro() {
   introContainer.style.height = '100vh';
   introContainer.style.zIndex = '9999';
 
+  // Hide the real navbar during the cinematic intro.
+  // The nav is outside <main> with z-index:100, while the intro is inside <main> (z-index:1).
+  // The intro's z-index:9999 is trapped in main's stacking context, so the nav bleeds through.
+  const realNav = document.querySelector('nav');
+  const mobileOverlay = document.querySelector('.mobile-nav-overlay');
+  if (realNav) {
+    realNav.style.opacity = '0';
+    realNav.style.pointerEvents = 'none';
+    realNav.style.transition = 'opacity 0.5s ease';
+  }
+  if (mobileOverlay) {
+    mobileOverlay.style.display = 'none';
+  }
+
   // Create a scroll proxy element. Shorter on mobile for snappier feel.
   const proxy = document.createElement('div');
   proxy.id = 'cinematic-scroll-proxy';
@@ -151,6 +165,23 @@ export function initCinematicIntro() {
   tl.to(introContainer, {
     autoAlpha: 0,
     duration: 3,
-    ease: 'power2.inOut'
+    ease: 'power2.inOut',
+    onComplete: () => {
+      // Reveal the real navbar after the cinematic intro is fully gone
+      if (realNav) {
+        realNav.style.opacity = '1';
+        realNav.style.pointerEvents = '';
+      }
+      if (mobileOverlay) {
+        mobileOverlay.style.display = '';
+      }
+    },
+    onReverseComplete: () => {
+      // Hide nav again if user scrolls back to the top
+      if (realNav) {
+        realNav.style.opacity = '0';
+        realNav.style.pointerEvents = 'none';
+      }
+    }
   }, '+=1');
 }

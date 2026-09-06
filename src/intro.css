@@ -449,11 +449,6 @@
    9. Responsive — Mobile (<=768px)
    ============================ */
 @media (max-width: 768px) {
-  /* Kill expensive 3D compositing on mobile */
-  .cinematic-camera {
-    transform-style: flat;
-  }
-  
   /* Remove blur filter — very expensive on mobile GPUs */
   .window-blind-shadows {
     filter: none;
