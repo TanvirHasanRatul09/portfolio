@@ -79,13 +79,23 @@ export function initCinematicIntro() {
 
   // ==========================================
   // Iframe Scale Logic
-  // On mobile, render at 640×360 instead of 1920×1080 to massively reduce GPU load.
-  // The monitor screen is tiny on mobile, so this resolution is more than enough.
+  // The monitor frame is a fixed 16:9 window. At 640×360, the iframe's
+  // internal width (640) falls under the site's 768px mobile breakpoint,
+  // so the iframe renders the MOBILE hero layout — nav, then a tall stack
+  // of photo/badge/name/title/summary — inside a viewport only 360px tall.
+  // That stack is centered and far taller than 360px, so only the photo
+  // survives inside the frame and everything else gets clipped off.
+  // Rendering at 960×540 instead keeps the same 16:9 shape and is still far
+  // lighter than full desktop resolution, but its 960px width clears the
+  // 768px breakpoint, so the iframe switches to the DESKTOP hero layout
+  // (photo beside the text, not stacked below it) — compact enough that
+  // the name, title, and summary all fit on-screen instead of being
+  // cropped out.
   // ==========================================
   const iframeContainer = document.querySelector('.portfolio-iframe-container');
   const iframeEl = document.querySelector('.portfolio-iframe');
-  const iframeBaseWidth = isMobile ? 640 : 1920;
-  const iframeBaseHeight = isMobile ? 360 : 1080;
+  const iframeBaseWidth = isMobile ? 960 : 1920;
+  const iframeBaseHeight = isMobile ? 540 : 1080;
 
   if (iframeEl) {
     iframeEl.style.width = iframeBaseWidth + 'px';
