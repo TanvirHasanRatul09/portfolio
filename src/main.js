@@ -165,13 +165,33 @@ if(projectCards.length > 0) {
 }
 
 // Hero animations on load
+// Animating the CSS `filter: blur()` property is expensive to composite on
+// mobile GPUs — unlike opacity/transform it usually isn't hardware
+// accelerated on phones, so running six blur tweens at once right on page
+// load (at the same time as the WebGL background and, on first visits, the
+// cinematic intro) is a common source of visible stutter on mobile. Mobile
+// keeps the same motion (fade + rise) without the blur layer.
+const isMobileViewport = window.innerWidth <= 768;
+const heroBlurIn = (px) => (isMobileViewport ? {} : { filter: `blur(${px}px)` });
+
 const tl = gsap.timeline();
-tl.from('.greeting', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 1, ease: 'power3.out', delay: 0.2 })
-  .from('.name', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 1, ease: 'power3.out' }, '-=0.6')
-  .from('.title', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 1, ease: 'power3.out' }, '-=0.6')
-  .from('.summary', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 1, ease: 'power3.out' }, '-=0.6')
-  .from('.cta-buttons a', { opacity: 0, y: 30, filter: 'blur(8px)', duration: 0.8, stagger: 0.15, ease: 'power3.out' }, '-=0.4')
-  .from('.hero-image', { opacity: 0, scale: 0.9, filter: 'blur(10px)', duration: 1.5, ease: 'power3.out' }, 0.6);
+tl.from('.greeting', { opacity: 0, y: 30, ...heroBlurIn(8), duration: 1, ease: 'power3.out', delay: 0.2 })
+  .from('.name', { opacity: 0, y: 30, ...heroBlurIn(8), duration: 1, ease: 'power3.out' }, '-=0.6')
+  .from('.title', { opacity: 0, y: 30, ...heroBlurIn(8), duration: 1, ease: 'power3.out' }, '-=0.6')
+  .from('.summary', { opacity: 0, y: 30, ...heroBlurIn(8), duration: 1, ease: 'power3.out' }, '-=0.6')
+  .from('.cta-buttons a', { opacity: 0, y: 30, ...heroBlurIn(8), duration: 0.8, stagger: 0.15, ease: 'power3.out' }, '-=0.4')
+  .from('.hero-image', { opacity: 0, scale: 0.9, ...heroBlurIn(10), duration: 1.5, ease: 'power3.out' }, 0.6);
+
+// ==========================================
+// Recalculate ScrollTrigger positions once everything (webfonts, images)
+// has actually finished loading. Late-loading fonts/images shift layout,
+// and on mobile — where assets typically load slower — that shift means
+// section reveal triggers can fire at the wrong scroll position if we
+// don't refresh after the fact.
+// ==========================================
+window.addEventListener('load', () => {
+  ScrollTrigger.refresh();
+});
 
 // --- MOBILE NAVIGATION TOGGLE ---
 const menuBtn = document.querySelector('.mobile-menu-btn');

@@ -14,6 +14,20 @@ export function initCinematicIntro() {
 
   const isMobile = window.innerWidth <= 768;
 
+  // Mobile browsers resize the viewport every time the address bar shows
+  // or hides during scroll — GSAP would otherwise treat that as a real
+  // resize and re-run all ScrollTrigger start/end math mid-scrub, which is
+  // what causes the animation to visibly jump/glitch on phones. This tells
+  // ScrollTrigger to ignore that specific case.
+  //
+  // NOTE: an earlier version of this fix also called
+  // ScrollTrigger.normalizeScroll(true) here. That hijacks native touch
+  // scrolling and, on this page, was measuring the scrollable page height
+  // *before* the scroll-proxy element below existed — so it capped
+  // scrolling short and the whole cinematic sequence froze partway through
+  // on real phones and in-app browsers (e.g. Messenger's WebView). Removed.
+  ScrollTrigger.config({ ignoreMobileResize: true });
+
   // ==========================================
   // Respect prefers-reduced-motion
   // ==========================================
@@ -26,6 +40,7 @@ export function initCinematicIntro() {
     introContainer.style.left = '0';
     introContainer.style.width = '100%';
     introContainer.style.height = '100vh';
+    introContainer.style.height = '100dvh'; // ignored by browsers that don't support dvh, keeping the vh fallback above
     introContainer.style.zIndex = '9999';
     introContainer.style.transition = 'opacity 0.6s ease';
 
@@ -97,6 +112,7 @@ export function initCinematicIntro() {
   introContainer.style.left = '0';
   introContainer.style.width = '100%';
   introContainer.style.height = '100vh';
+  introContainer.style.height = '100dvh'; // ignored by browsers that don't support dvh, keeping the vh fallback above
   introContainer.style.zIndex = '9999';
 
   // Hide the real navbar during the cinematic intro.
@@ -186,4 +202,10 @@ export function initCinematicIntro() {
       }
     }
   }, '+=1');
+
+  // The proxy element was just inserted, changing the document's total
+  // scrollable height. Force ScrollTrigger to re-measure right away so its
+  // start/end points are based on the final layout, not whatever it saw
+  // before the proxy existed.
+  ScrollTrigger.refresh();
 }
