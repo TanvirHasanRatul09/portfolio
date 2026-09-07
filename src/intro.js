@@ -50,6 +50,38 @@ export function initCinematicIntro() {
   let activeTimeline = null;
   let cancelReducedMotionPlay = null;
 
+  // ==========================================
+  // Iframe readiness
+  // ==========================================
+  // The monitor shows a live iframe of the whole site loading a second
+  // time (its own JS bundle, fonts, and Three.js scene). With the zoom
+  // phases now very short, the camera can arrive at the monitor before
+  // that second copy has actually painted anything, showing a blank
+  // screen. `iframeReady` flips true on the iframe's real `load` event
+  // (fires once — the src never changes across replays) and
+  // `waitForIframe` lets the cinematic sequence pause on it, bounded by
+  // a safety cap so a slow/blocked iframe can never hang the intro.
+  let iframeReady = false;
+  if (iframeEl) {
+    iframeEl.addEventListener('load', () => {
+      iframeReady = true;
+    });
+  }
+  function waitForIframe(maxWaitMs) {
+    if (iframeReady || !iframeEl) return Promise.resolve();
+    return new Promise((resolve) => {
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        resolve();
+      };
+      const onLoad = () => finish();
+      iframeEl.addEventListener('load', onLoad, { once: true });
+      setTimeout(finish, maxWaitMs);
+    });
+  }
+
   function stopWhateverIsPlaying() {
     if (activeTimeline) {
       activeTimeline.kill();
@@ -117,7 +149,7 @@ export function initCinematicIntro() {
   // ==========================================
   // Full cinematic sequence — an autoplaying timeline
   // ==========================================
-  function playCinematicSequence() {
+  async function playCinematicSequence() {
     // Reset every element the timeline animates back to its pre-intro
     // starting value. Needed both for the first play and for a replay
     // triggered from the logo, since the previous run left everything at
@@ -169,6 +201,7 @@ export function initCinematicIntro() {
     }
 
     const tl = gsap.timeline({
+      paused: true,
       onComplete: () => {
         // The one and only place "intro complete" is decided, using
         // GSAP's own completion callback rather than an arbitrary timer.
@@ -195,15 +228,19 @@ export function initCinematicIntro() {
       tl.to(iframeContainer, { opacity: 1, duration: 1.5, ease: 'power1.inOut' }, '<0.5');
     }
 
-    // Phase 2: Dolly zoom — establishing shot
-    tl.to(camera, { z: 50, duration: 1, ease: 'none' }, '+=0.5');
-    tl.to(person, { autoAlpha: 0, duration: 1, ease: 'power2.inOut' }, '<0.5');
+    // Phase 2: Dolly zoom — establishing shot.
+    // Durations cut down to the fastest values that still read as a
+    // motion rather than an instant jump (was 1s + 0.5s gap).
+    tl.to(camera, { z: 50, duration: 0.25, ease: 'none' }, '+=0.15');
+    tl.to(person, { autoAlpha: 0, duration: 0.25, ease: 'power2.inOut' }, '<0.15');
 
-    // Phase 3: Move toward desk
-    tl.to(camera, { z: 500, duration: 2, ease: 'power1.inOut' });
+    // Phase 3: Move toward desk (was 2s).
+    tl.to(camera, { z: 500, duration: 0.35, ease: 'power1.inOut' });
 
-    // Phase 4: Enter Monitor — dynamically calculated Z for pixel-perfect full-screen fit
-    tl.to(camera, { z: cameraZFinal, duration: 4, ease: 'power2.inOut' });
+    // Phase 4: Enter Monitor — dynamically calculated Z for pixel-perfect
+    // full-screen fit (was 4s). This was the single biggest chunk of the
+    // whole intro, so it's the biggest cut here.
+    tl.to(camera, { z: cameraZFinal, duration: 0.45, ease: 'power2.inOut' });
 
     // Phase 5: Crossfade — reveal the real portfolio underneath.
     // Shortened pause + duration (was '+=1' / 3s) so there's much less of a
@@ -215,6 +252,22 @@ export function initCinematicIntro() {
       duration: 1,
       ease: 'power2.inOut'
     }, '+=0.2');
+
+    // The whole timeline was built paused. Phase 1 crossfades the monitor
+    // from the terminal placeholder straight to the live iframe, so the
+    // iframe's own copy of the site needs to actually have painted
+    // something by the time that crossfade starts — otherwise the monitor
+    // shows blank space instead of the portfolio. The terminal placeholder
+    // is already on screen (from the synchronous reset above), so it
+    // naturally covers this wait; a 4s cap keeps a slow or blocked iframe
+    // from ever hanging the intro.
+    await waitForIframe(4000);
+
+    // A replay's stopWhateverIsPlaying() may have already killed this
+    // exact timeline while we were waiting (e.g. a very fast double-click
+    // on the logo). Don't resurrect a killed timeline.
+    if (activeTimeline !== tl) return;
+    tl.play();
   }
 
   // ==========================================

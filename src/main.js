@@ -11,11 +11,12 @@ import { initCinematicIntro } from './intro.js';
 
 // Check if we are inside the iframe monitor
 const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.get('intro') === 'false') {
+const isInsideMonitorIframe = urlParams.get('intro') === 'false';
+if (isInsideMonitorIframe) {
   // Hide the cinematic intro entirely and don't initialize GSAP for it
   const introEl = document.getElementById('cinematic-intro');
   if (introEl) introEl.style.display = 'none';
-  
+
   // Hide scrollbars so the miniature portfolio looks clean inside the monitor
   document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
@@ -24,88 +25,98 @@ if (urlParams.get('intro') === 'false') {
 }
 
 // --- THREE.JS BACKGROUND SETUP ---
-const canvas = document.querySelector('#bg-canvas');
-const scene = new THREE.Scene();
+// Skipped entirely for the copy of the site running inside the intro's
+// monitor iframe. That copy is only ever seen tiny, for a couple of
+// seconds, behind the monitor bezel — the particle background isn't
+// something anyone would notice missing there — but a full second
+// WebGL context + requestAnimationFrame loop running at the same time
+// as the real page's own background was competing for the same CPU/GPU
+// budget as the cinematic camera animation, visibly stretching out the
+// intro's timing on mobile right as the monitor content becomes visible.
+if (!isInsideMonitorIframe) {
+  const canvas = document.querySelector('#bg-canvas');
+  const scene = new THREE.Scene();
 
-// Camera setup
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 30;
+  // Camera setup
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 30;
 
-// Renderer setup
-const renderer = new THREE.WebGLRenderer({
-  canvas,
-  alpha: true,
-  antialias: true,
-});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-// Particles / Data Nodes — fewer on mobile to save GPU
-const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = window.innerWidth <= 768 ? 200 : 700;
-const posArray = new Float32Array(particlesCount * 3);
-
-for (let i = 0; i < particlesCount * 3; i++) {
-  // Spread particles randomly in 3D space
-  posArray[i] = (Math.random() - 0.5) * 100;
-}
-
-particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-const material = new THREE.PointsMaterial({
-  size: 0.25, /* Increased size for mobile visibility */
-  color: 0x7e22ce, /* Deep Purple to match theme */
-  transparent: true,
-  opacity: 0.8,
-  blending: THREE.AdditiveBlending
-});
-
-const particlesMesh = new THREE.Points(particlesGeometry, material);
-scene.add(particlesMesh);
-
-// Mouse interaction setup
-let mouseX = 0;
-let mouseY = 0;
-let targetX = 0;
-let targetY = 0;
-const windowHalfX = window.innerWidth / 2;
-const windowHalfY = window.innerHeight / 2;
-
-document.addEventListener('mousemove', (event) => {
-  mouseX = (event.clientX - windowHalfX);
-  mouseY = (event.clientY - windowHalfY);
-});
-
-// Animation Loop
-const clock = new THREE.Clock();
-
-const tick = () => {
-  const elapsedTime = clock.getElapsedTime();
-
-  // Gentle idle rotation
-  particlesMesh.rotation.y = elapsedTime * 0.15;
-  particlesMesh.rotation.x = elapsedTime * 0.08;
-
-  // Mouse interaction for parallax effect
-  targetX = mouseX * 0.002;
-  targetY = mouseY * 0.002;
-  
-  particlesMesh.rotation.y += 0.1 * (targetX - particlesMesh.rotation.y);
-  particlesMesh.rotation.x += 0.1 * (targetY - particlesMesh.rotation.x);
-
-  renderer.render(scene, camera);
-  window.requestAnimationFrame(tick);
-};
-
-tick();
-
-// Handle Resize
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
+  // Renderer setup
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true,
+  });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-});
+
+  // Particles / Data Nodes — fewer on mobile to save GPU
+  const particlesGeometry = new THREE.BufferGeometry();
+  const particlesCount = window.innerWidth <= 768 ? 200 : 700;
+  const posArray = new Float32Array(particlesCount * 3);
+
+  for (let i = 0; i < particlesCount * 3; i++) {
+    // Spread particles randomly in 3D space
+    posArray[i] = (Math.random() - 0.5) * 100;
+  }
+
+  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+  const material = new THREE.PointsMaterial({
+    size: 0.25, /* Increased size for mobile visibility */
+    color: 0x7e22ce, /* Deep Purple to match theme */
+    transparent: true,
+    opacity: 0.8,
+    blending: THREE.AdditiveBlending
+  });
+
+  const particlesMesh = new THREE.Points(particlesGeometry, material);
+  scene.add(particlesMesh);
+
+  // Mouse interaction setup
+  let mouseX = 0;
+  let mouseY = 0;
+  let targetX = 0;
+  let targetY = 0;
+  const windowHalfX = window.innerWidth / 2;
+  const windowHalfY = window.innerHeight / 2;
+
+  document.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX - windowHalfX);
+    mouseY = (event.clientY - windowHalfY);
+  });
+
+  // Animation Loop
+  const clock = new THREE.Clock();
+
+  const tick = () => {
+    const elapsedTime = clock.getElapsedTime();
+
+    // Gentle idle rotation
+    particlesMesh.rotation.y = elapsedTime * 0.15;
+    particlesMesh.rotation.x = elapsedTime * 0.08;
+
+    // Mouse interaction for parallax effect
+    targetX = mouseX * 0.002;
+    targetY = mouseY * 0.002;
+
+    particlesMesh.rotation.y += 0.1 * (targetX - particlesMesh.rotation.y);
+    particlesMesh.rotation.x += 0.1 * (targetY - particlesMesh.rotation.x);
+
+    renderer.render(scene, camera);
+    window.requestAnimationFrame(tick);
+  };
+
+  tick();
+
+  // Handle Resize
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  });
+}
 
 
 // --- GSAP ANIMATIONS ---
