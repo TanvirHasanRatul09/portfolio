@@ -4,9 +4,14 @@
  */
 
 #cinematic-intro {
+  /* This width/height is only used for the instant before the JS in
+     intro.js runs and switches this element to `position: fixed; inset: 0`
+     (see the note there on why inset is used instead of a vh/dvh height).
+     Kept simple here since it's a same-page absolute box, not a
+     viewport-pinned one, until JS takes over. */
   width: 100%;
-  height: 100vh; /* fallback for browsers without dvh */
-  height: 100dvh; /* tracks the real visible viewport as mobile browser chrome shows/hides, so the fixed scene never mismatches the screen mid-scroll */
+  height: 100vh;
+  height: 100dvh;
   position: absolute;
   top: 0;
   left: 0;
@@ -17,9 +22,12 @@
 
 .cinematic-container {
   position: relative;
-  width: 100vw;
-  height: 100vh; /* fallback for browsers without dvh */
-  height: 100dvh;
+  /* Fills its parent (#cinematic-intro) exactly, whatever size that ends
+     up being — safer than independently recomputing 100vw/100dvh here,
+     which could round to a slightly different value than the parent and
+     reopen the same edge-gap problem. */
+  width: 100%;
+  height: 100%;
   z-index: 10;
   overflow: hidden;
   padding: 0 !important;

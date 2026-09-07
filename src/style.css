@@ -25,11 +25,25 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Removes the gray/blue flash Android browsers paint on every tapped
+     link, button, and card — a big part of what makes a touch interface
+     feel "glitchy" rather than smooth. Real :active states replace it. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 html, body {
   overflow-x: hidden;
   width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -39,6 +53,13 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+}
+
+a, button {
+  /* Skips the ~300ms delay some mobile browsers add before firing a tap,
+     which is normally there to disambiguate a tap from the start of a
+     double-tap-to-zoom gesture. */
+  touch-action: manipulation;
 }
 
 /* Typography Base */
@@ -731,11 +752,10 @@ footer {
 .mobile-nav-overlay {
   position: fixed;
   top: 0;
+  bottom: 0; /* pinned to the viewport edges directly, rather than a computed 100vh/100dvh that can round short on some mobile browsers */
   right: -100%; /* Hidden off-screen by default */
   width: 70vw;
   max-width: 350px;
-  height: 100vh; /* fallback for browsers without dvh */
-  height: 100dvh;
   background: rgba(9, 9, 11, 0.85); /* Dark Glass */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);

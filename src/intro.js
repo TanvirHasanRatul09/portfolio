@@ -34,13 +34,13 @@ export function initCinematicIntro() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (prefersReducedMotion) {
-    // Skip the cinematic sequence entirely — simple fade reveal
+    // Skip the cinematic sequence entirely — simple fade reveal.
+    // `inset: 0` pins all four edges directly to the viewport instead of
+    // computing a width/height value — on some mobile browsers `100dvh`
+    // resolves a few pixels short of the true visible area, leaving a gap
+    // at the bottom where the real page underneath shows through.
     introContainer.style.position = 'fixed';
-    introContainer.style.top = '0';
-    introContainer.style.left = '0';
-    introContainer.style.width = '100%';
-    introContainer.style.height = '100vh';
-    introContainer.style.height = '100dvh'; // ignored by browsers that don't support dvh, keeping the vh fallback above
+    introContainer.style.inset = '0';
     introContainer.style.zIndex = '9999';
     introContainer.style.transition = 'opacity 0.6s ease';
 
@@ -116,13 +116,13 @@ export function initCinematicIntro() {
   // ==========================================
   const terminal = document.querySelector('.terminal-placeholder');
 
-  // Make the cinematic intro container fixed so it stays in the viewport
+  // Make the cinematic intro container fixed so it stays in the viewport.
+  // `inset: 0` pins all four edges directly to the viewport instead of
+  // computing a width/height value — on some mobile browsers `100dvh`
+  // resolves a few pixels short of the true visible area, leaving a gap
+  // at the bottom where the real page underneath shows through.
   introContainer.style.position = 'fixed';
-  introContainer.style.top = '0';
-  introContainer.style.left = '0';
-  introContainer.style.width = '100%';
-  introContainer.style.height = '100vh';
-  introContainer.style.height = '100dvh'; // ignored by browsers that don't support dvh, keeping the vh fallback above
+  introContainer.style.inset = '0';
   introContainer.style.zIndex = '9999';
 
   // Hide the real navbar during the cinematic intro.
