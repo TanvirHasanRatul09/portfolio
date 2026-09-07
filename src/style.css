@@ -36,6 +36,17 @@ html, body {
   width: 100%;
 }
 
+/* Applied by intro.js for the exact duration of the cinematic intro.
+   `position: fixed` (rather than only `overflow: hidden`) is needed
+   because iOS Safari can still rubber-band-scroll a body that only has
+   `overflow: hidden`. Safe unconditionally here because the intro always
+   starts at scrollY 0, so there's no scroll position to lose. */
+body.intro-lock {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }
