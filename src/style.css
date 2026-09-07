@@ -102,6 +102,27 @@ h1, h2, h3, h4, .logo {
   }
 }
 
+/* Mobile: a large, continuously-animating filter:blur() layer is one of the
+   most expensive things a mobile GPU can be asked to composite every frame.
+   Running it at the same time as the WebGL particle canvas and (during the
+   intro) the GSAP scroll-scrubbed 3D scene is what causes the stutter/jank
+   users see as "glitches". Trade the motion for a lighter blur and a much
+   slower drift so it stays smooth without going fully static. */
+@media (max-width: 767px) {
+  .bg-gradient::before,
+  .bg-gradient::after {
+    filter: blur(40px);
+    animation-duration: 22s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-gradient::before,
+  .bg-gradient::after {
+    animation: none;
+  }
+}
+
 @keyframes auroraFloat {
   0% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(15vw, 10vh) scale(1.1); }
@@ -144,8 +165,10 @@ nav {
   text-decoration: none;
   transition: color 0.2s ease;
 }
-.logo:hover {
-  color: var(--accent-primary);
+@media (hover: hover) and (pointer: fine) {
+  .logo:hover {
+    color: var(--accent-primary);
+  }
 }
 
 .nav-links {
@@ -172,7 +195,8 @@ main {
 }
 
 section {
-  min-height: 100vh;
+  min-height: 100vh; /* fallback for browsers without dvh */
+  min-height: 100dvh; /* tracks the real visible viewport as mobile browser chrome shows/hides, instead of jumping */
   padding: 8rem 5% 4rem;
   display: flex;
   flex-direction: column;
@@ -205,7 +229,8 @@ section {
 
 /* Hero Section */
 .hero {
-  min-height: 100vh;
+  min-height: 100vh; /* fallback for browsers without dvh */
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   padding: 6rem 5% 2rem;
@@ -308,20 +333,32 @@ section {
   border: 1px solid var(--text-primary);
 }
 
-.primary:hover {
-  background: transparent;
-  color: var(--text-primary);
-}
-
 .secondary {
   background: transparent;
   border: 1px solid var(--border-strong);
   color: var(--text-primary);
 }
 
-.secondary:hover {
-  border-color: var(--text-primary);
-  background: rgba(255,255,255,0.05);
+/* Hover-only visual states (also gated below with :hover/:pointer) — a
+   plain tap on a touch screen fires :hover with nothing to un-hover it,
+   so buttons/cards would otherwise stay stuck in their "hovered" look
+   after every tap. Scoping these to real hover-capable pointers fixes it
+   and lets touch use a normal, momentary :active state instead. */
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover {
+    background: transparent;
+    color: var(--text-primary);
+  }
+
+  .secondary:hover {
+    border-color: var(--text-primary);
+    background: rgba(255,255,255,0.05);
+  }
+}
+
+.primary:active,
+.secondary:active {
+  transform: scale(0.97);
 }
 
 .hero-image {
@@ -353,11 +390,6 @@ section {
   z-index: 1;
 }
 
-.profile-pic-container:hover {
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 20px var(--accent-glow);
-}
-
 .profile-pic {
   width: 100%;
   height: 100%;
@@ -366,9 +398,16 @@ section {
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s ease;
 }
 
-.profile-pic-container:hover .profile-pic {
-  filter: grayscale(0%) contrast(1);
-  transform: scale(1.15);
+@media (hover: hover) and (pointer: fine) {
+  .profile-pic-container:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .profile-pic-container:hover .profile-pic {
+    filter: grayscale(0%) contrast(1);
+    transform: scale(1.15);
+  }
 }
 
 /* Glassmorphism Cards -> Developer Cards */
@@ -382,12 +421,23 @@ section {
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.glass-card:hover {
-  transform: scale(1.05) !important;
-  border-color: var(--border-strong);
-  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
-  position: relative;
-  z-index: 10;
+@media (hover: hover) and (pointer: fine) {
+  .glass-card:hover {
+    transform: scale(1.05) !important;
+    border-color: var(--border-strong);
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 10;
+  }
+}
+
+/* Touch devices get a quick, self-resetting tap response instead of a
+   hover state that would otherwise stay "stuck" scaled up after the tap. */
+@media (hover: none) {
+  .glass-card:active {
+    transform: scale(0.98);
+    border-color: var(--border-strong);
+  }
 }
 
 /* About Section */
@@ -523,8 +573,10 @@ section {
   align-self: flex-start;
 }
 
-.project-link:hover {
-  color: var(--accent-primary);
+@media (hover: hover) and (pointer: fine) {
+  .project-link:hover {
+    color: var(--accent-primary);
+  }
 }
 
 /* LeetCode Section */
@@ -598,8 +650,10 @@ section {
   transition: border-color 0.2s ease;
 }
 
-.contact-info .link:hover {
-  border-color: var(--accent-primary);
+@media (hover: hover) and (pointer: fine) {
+  .contact-info .link:hover {
+    border-color: var(--accent-primary);
+  }
 }
 
 .social-links {
@@ -624,10 +678,20 @@ section {
   background: var(--bg-tertiary);
 }
 
-.social-icon:hover {
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  transform: scale(1.15);
+@media (hover: hover) and (pointer: fine) {
+  .social-icon:hover {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    transform: scale(1.15);
+  }
+}
+
+@media (hover: none) {
+  .social-icon:active {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    transform: scale(0.95);
+  }
 }
 
 /* Footer */
@@ -653,9 +717,15 @@ footer {
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.mobile-menu-btn:hover {
-  color: var(--accent-primary);
-  transform: scale(1.1);
+@media (hover: hover) and (pointer: fine) {
+  .mobile-menu-btn:hover {
+    color: var(--accent-primary);
+    transform: scale(1.1);
+  }
+}
+
+.mobile-menu-btn:active {
+  transform: scale(0.9);
 }
 
 .mobile-nav-overlay {
@@ -664,7 +734,8 @@ footer {
   right: -100%; /* Hidden off-screen by default */
   width: 70vw;
   max-width: 350px;
-  height: 100vh;
+  height: 100vh; /* fallback for browsers without dvh */
+  height: 100dvh;
   background: rgba(9, 9, 11, 0.85); /* Dark Glass */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -698,9 +769,15 @@ footer {
   display: inline-block;
 }
 
-.mobile-nav-links a:hover {
+@media (hover: hover) and (pointer: fine) {
+  .mobile-nav-links a:hover {
+    color: var(--accent-primary);
+    transform: translateX(10px);
+  }
+}
+
+.mobile-nav-links a:active {
   color: var(--accent-primary);
-  transform: translateX(10px);
 }
 
 /* Utilities */
