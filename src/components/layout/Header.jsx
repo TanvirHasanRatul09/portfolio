@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { FileText, Menu } from 'lucide-react'
 import { navigation } from '../../data/portfolio'
 import { useActiveSection } from '../../hooks/useActiveSection'
@@ -7,20 +7,12 @@ import { Button } from '../ui/button'
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from '../ui/sheet'
 
 export function Header() {
-  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const sectionIds = useMemo(() => ['hero', ...navigation.map(({ id }) => id)], [])
   const active = useActiveSection(sectionIds)
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 18)
-    handleScroll()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   return (
-    <header className={cn('fixed inset-x-0 top-0 z-40 border-b border-transparent transition-colors', scrolled && 'border-violet-200/[0.12] bg-[#190d1f]/88 backdrop-blur-xl')}>
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-violet-200/[0.08] bg-[#120916]/65 shadow-[0_10px_35px_-28px_rgba(0,0,0,.9)] backdrop-blur-md">
       <div className="site-container flex h-16 items-center justify-between pt-[env(safe-area-inset-top)] sm:h-[4.5rem]">
         <a href="#hero" className="group inline-flex min-h-11 items-center font-display text-xl font-extrabold tracking-[-.04em] text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500">
           RATUL<span className="ml-1 text-rose-600 transition-transform group-hover:translate-x-0.5">/</span>
