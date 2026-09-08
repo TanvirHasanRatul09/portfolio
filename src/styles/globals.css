@@ -11,7 +11,7 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  --page-bg: #190d1f;
+  --page-bg: #120916;
 }
 
 * { box-sizing: border-box; }
@@ -64,10 +64,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 8% 8%, rgba(225, 29, 72, .38), transparent 32rem),
-    radial-gradient(circle at 92% 22%, rgba(147, 51, 234, .36), transparent 36rem),
-    radial-gradient(circle at 52% 82%, rgba(190, 24, 93, .28), transparent 38rem),
-    linear-gradient(150deg, #190d1f 0%, #291020 48%, #1d102f 100%);
+    radial-gradient(circle at 8% 8%, rgba(190, 24, 93, .32), transparent 32rem),
+    radial-gradient(circle at 92% 22%, rgba(126, 34, 206, .31), transparent 36rem),
+    radial-gradient(circle at 52% 82%, rgba(159, 18, 57, .24), transparent 38rem),
+    linear-gradient(150deg, #120916 0%, #200c1a 48%, #160b25 100%);
 }
 
 .ambient-background::after {

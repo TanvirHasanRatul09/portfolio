@@ -24,7 +24,7 @@ function App() {
   const socialLinksLink = socialLinks.facebook
 
   return (
-    <div className="min-h-dvh overflow-clip bg-[#190d1f] text-zinc-100">
+    <div className="min-h-dvh overflow-clip bg-[#120916] text-zinc-100">
       <a href="#main-content" className="fixed left-3 top-3 z-[100] -translate-y-20 rounded-md bg-white px-4 py-3 font-semibold text-zinc-950 transition-transform focus:translate-y-0">Skip to content</a>
       <div className="ambient-background" aria-hidden="true" />
       <WebGLBackground onAvailabilityChange={handleAvailability} />
@@ -66,13 +66,13 @@ function App() {
           <div className="site-container">
             <SectionHeading eyebrow="01 / Profile" title="Engineering reliable systems from the API outward." description="A Computer Science undergraduate seeking a Software Engineering or Backend Developer internship, with a practical focus on REST APIs, SQL, and object-oriented programming." />
             <div className="grid gap-5 lg:grid-cols-[.78fr_1.22fr]">
-              <Card className="relative overflow-hidden p-6 sm:p-8">
+              <Card className="premium-lift relative overflow-hidden p-6 sm:p-8">
                 <div className="absolute right-0 top-0 h-24 w-24 bg-gradient-to-bl from-rose-900/25 to-transparent" aria-hidden="true" />
                 <p className="font-mono text-xs uppercase tracking-[.18em] text-zinc-500">Current focus</p>
                 <h3 className="mt-4 font-display text-2xl font-semibold tracking-tight text-white">Backend foundations that hold up under real use.</h3>
                 <p className="mt-5 leading-7 text-zinc-400">I enjoy turning requirements into clean data models, predictable API contracts, and maintainable Python applications.</p>
               </Card>
-              <Card className="p-6 sm:p-8">
+              <Card className="premium-lift p-6 sm:p-8">
                 <h3 className="font-display text-xl font-semibold text-white">Education</h3>
                 <div className="mt-6 space-y-0">
                   {education.map((item, index) => <div key={item.school} className="relative border-l border-white/10 pb-7 pl-7 last:pb-0"><span className="absolute -left-[5px] top-1.5 size-2.5 rounded-full border-2 border-zinc-950 bg-rose-600" /><p className="text-base font-semibold text-zinc-100">{item.school}</p><p className="mt-1 text-sm leading-6 text-zinc-400">{item.detail}</p><p className="mt-2 font-mono text-xs text-violet-300">{item.meta}</p>{index < education.length - 1 && <span className="sr-only">Next education entry</span>}</div>)}
@@ -101,15 +101,15 @@ function App() {
         </section>
 
         <section id="leetcode" className="section-shell">
-          <div className="site-container"><Card className="overflow-hidden p-7 sm:p-10"><div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]"><div><p className="font-mono text-xs uppercase tracking-[.2em] text-amber-400">04 / Problem solving</p><h2 className="mt-4 font-display text-[clamp(2rem,6vw,3.5rem)] font-bold tracking-[-.04em] text-white">Practising clarity under constraints.</h2><p className="mt-4 max-w-2xl leading-7 text-zinc-400">Active in algorithmic problem solving and data-structure optimization through the LeetCode profile Destro69.</p></div><Button asChild><ExternalLink href="https://leetcode.com/u/Destro69/">View LeetCode <ArrowUpRight size={17} aria-hidden="true" /></ExternalLink></Button></div></Card></div>
+          <div className="site-container"><Card className="premium-lift overflow-hidden p-7 sm:p-10"><div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]"><div><p className="font-mono text-xs uppercase tracking-[.2em] text-amber-400">04 / Problem solving</p><h2 className="mt-4 font-display text-[clamp(2rem,6vw,3.5rem)] font-bold tracking-[-.04em] text-white">Practising clarity under constraints.</h2><p className="mt-4 max-w-2xl leading-7 text-zinc-400">Active in algorithmic problem solving and data-structure optimization through the LeetCode profile Destro69.</p></div><Button asChild><ExternalLink href="https://leetcode.com/u/Destro69/">View LeetCode <ArrowUpRight size={17} aria-hidden="true" /></ExternalLink></Button></div></Card></div>
         </section>
 
         <section id="certifications" className="section-shell">
           <div className="site-container">
             <SectionHeading eyebrow="05 / Credentials" title="Learning beyond the classroom." />
             <div className="grid gap-5 md:grid-cols-2">
-              <Card className="p-6 sm:p-8"><p className="font-mono text-xs uppercase tracking-[.18em] text-violet-300">Leadership & activities</p><ul className="mt-6 space-y-5 text-zinc-300"><li className="border-l border-rose-700 pl-5"><strong className="block text-white">Deputy Coordinator</strong><span className="text-sm text-zinc-400">Department of Publication — AUST PIC</span></li><li className="border-l border-white/10 pl-5"><strong className="block text-white">Member</strong><span className="text-sm text-zinc-400">Josephite Math Club</span></li></ul></Card>
-              <Card className="p-6 sm:p-8"><p className="font-mono text-xs uppercase tracking-[.18em] text-violet-300">Certifications</p><ul className="mt-6 space-y-5 text-zinc-300"><li className="border-l border-rose-700 pl-5"><strong className="block text-white">Google Prompting Essentials</strong><span className="text-sm text-zinc-400">Coursera specialization</span></li><li className="border-l border-white/10 pl-5"><strong className="block text-white">Data Analytics</strong><span className="text-sm text-zinc-400">Excel · Power BI · Python · SQL — Tutorials Point Bangladesh</span></li></ul></Card>
+              <Card className="premium-lift p-6 sm:p-8"><p className="font-mono text-xs uppercase tracking-[.18em] text-violet-300">Leadership & activities</p><ul className="mt-6 space-y-5 text-zinc-300"><li className="border-l border-rose-700 pl-5"><strong className="block text-white">Deputy Coordinator</strong><span className="text-sm text-zinc-400">Department of Publication — AUST PIC</span></li><li className="border-l border-white/10 pl-5"><strong className="block text-white">Member</strong><span className="text-sm text-zinc-400">Josephite Math Club</span></li></ul></Card>
+              <Card className="premium-lift p-6 sm:p-8"><p className="font-mono text-xs uppercase tracking-[.18em] text-violet-300">Certifications</p><ul className="mt-6 space-y-5 text-zinc-300"><li className="border-l border-rose-700 pl-5"><strong className="block text-white">Google Prompting Essentials</strong><span className="text-sm text-zinc-400">Coursera specialization</span></li><li className="border-l border-white/10 pl-5"><strong className="block text-white">Data Analytics</strong><span className="text-sm text-zinc-400">Excel · Power BI · Python · SQL — Tutorials Point Bangladesh</span></li></ul></Card>
             </div>
           </div>
         </section>
