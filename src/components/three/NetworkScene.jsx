@@ -65,30 +65,30 @@ export function NetworkScene({ mobile }) {
       <group ref={core} position={[mobile ? 2.3 : 4.8, mobile ? 2.1 : 1.15, -5]} rotation={[0.5, -0.35, 0.2]}>
         <mesh scale={mobile ? 2.15 : 3.5}>
           <icosahedronGeometry args={[1, mobile ? 1 : 2]} />
-          <meshBasicMaterial color="#e11d62" wireframe transparent opacity={mobile ? 0.16 : 0.27} depthWrite={false} />
+          <meshBasicMaterial color="#f43f75" wireframe transparent opacity={mobile ? 0.15 : 0.25} depthWrite={false} />
         </mesh>
         <mesh scale={mobile ? 1.25 : 2.05} rotation={[0.4, 0.8, 0]}>
           <torusKnotGeometry args={[1, 0.13, mobile ? 48 : 72, 8, 2, 3]} />
-          <meshBasicMaterial color="#a855f7" wireframe transparent opacity={mobile ? 0.2 : 0.34} depthWrite={false} />
+          <meshBasicMaterial color="#b56cff" wireframe transparent opacity={mobile ? 0.18 : 0.31} depthWrite={false} />
         </mesh>
       </group>
       <group ref={orbit} position={[-5.4, -2.1, -6]} rotation={[1.08, 0.2, -0.35]}>
         <mesh scale={mobile ? 1.8 : 3.4}>
           <torusGeometry args={[1.35, 0.012, 3, mobile ? 48 : 72]} />
-          <meshBasicMaterial color="#fb7185" transparent opacity={mobile ? 0.18 : 0.28} depthWrite={false} />
+          <meshBasicMaterial color="#ff6b96" transparent opacity={mobile ? 0.16 : 0.25} depthWrite={false} />
         </mesh>
       </group>
       <points>
         <bufferGeometry><bufferAttribute attach="attributes-position" args={[nodes, 3]} /></bufferGeometry>
-        <pointsMaterial color="#c084fc" size={mobile ? 0.035 : 0.045} transparent opacity={0.56} sizeAttenuation depthWrite={false} blending={THREE.AdditiveBlending} />
+        <pointsMaterial color="#d8a4ff" size={mobile ? 0.035 : 0.045} transparent opacity={mobile ? 0.4 : 0.52} sizeAttenuation depthWrite={false} blending={THREE.AdditiveBlending} />
       </points>
       <lineSegments>
         <bufferGeometry><bufferAttribute attach="attributes-position" args={[edges, 3]} /></bufferGeometry>
-        <lineBasicMaterial color="#be185d" transparent opacity={mobile ? 0.12 : 0.2} depthWrite={false} />
+        <lineBasicMaterial color="#e13878" transparent opacity={mobile ? 0.1 : 0.18} depthWrite={false} />
       </lineSegments>
       <points ref={packets}>
         <bufferGeometry><bufferAttribute attach="attributes-position" args={[packetPositions, 3]} /></bufferGeometry>
-        <pointsMaterial color="#fb7185" size={mobile ? 0.055 : 0.075} transparent opacity={0.78} sizeAttenuation depthWrite={false} blending={THREE.AdditiveBlending} />
+        <pointsMaterial color="#ff7aa2" size={mobile ? 0.055 : 0.075} transparent opacity={mobile ? 0.62 : 0.74} sizeAttenuation depthWrite={false} blending={THREE.AdditiveBlending} />
       </points>
     </group>
   )
