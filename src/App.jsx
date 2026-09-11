@@ -24,7 +24,7 @@ function App() {
   const socialLinksLink = socialLinks.facebook
 
   return (
-    <div className="min-h-dvh overflow-clip bg-[#17091d] text-zinc-100">
+    <div className="min-h-dvh overflow-clip bg-[#1c0c23] text-zinc-100">
       <a href="#main-content" className="fixed left-3 top-3 z-[100] -translate-y-20 rounded-md bg-white px-4 py-3 font-semibold text-zinc-950 transition-transform focus:translate-y-0">Skip to content</a>
       <div className="ambient-background" aria-hidden="true" />
       <WebGLBackground onAvailabilityChange={handleAvailability} />
