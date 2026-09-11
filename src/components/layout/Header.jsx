@@ -12,7 +12,7 @@ export function Header() {
   const active = useActiveSection(sectionIds)
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-violet-200/[0.08] bg-[#120916]/65 shadow-[0_10px_35px_-28px_rgba(0,0,0,.9)] backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-violet-200/[0.08] bg-[#17091d]/65 shadow-[0_10px_35px_-28px_rgba(0,0,0,.9)] backdrop-blur-md">
       <div className="site-container flex h-16 items-center justify-between pt-[env(safe-area-inset-top)] sm:h-[4.5rem]">
         <a href="#hero" className="group inline-flex min-h-11 items-center font-display text-xl font-extrabold tracking-[-.04em] text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500">
           RATUL<span className="ml-1 text-rose-600 transition-transform group-hover:translate-x-0.5">/</span>
