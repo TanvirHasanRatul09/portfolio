@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useMotionPreferences } from '../../hooks/useMotionPreferences'
 import { isHistoryRestore, isResourceConstrained } from '../../lib/capabilities'
 
@@ -8,21 +8,26 @@ function shouldSkipIntro({ mobile, reduced, webglAvailable }) {
   return reduced || (mobile && (!webglAvailable || isResourceConstrained())) || isHistoryRestore()
 }
 
-export function CinematicIntro({ webglAvailable }) {
+export function CinematicIntro({ webglAvailable, onComplete }) {
   const { mobile, reduced } = useMotionPreferences()
   const [visible, setVisible] = useState(() => !shouldSkipIntro({ mobile, reduced, webglAvailable }))
 
+  const completeIntro = useCallback(() => {
+    setVisible(false)
+    onComplete?.()
+  }, [onComplete])
+
   useEffect(() => {
     if (!visible) return undefined
-    const failSafe = window.setTimeout(() => setVisible(false), mobile ? 2000 : 4600)
+    const failSafe = window.setTimeout(completeIntro, mobile ? 2000 : 4600)
     return () => window.clearTimeout(failSafe)
-  }, [mobile, visible])
+  }, [completeIntro, mobile, visible])
 
   if (!visible) return null
 
   return (
-    <div className={`intro-overlay ${mobile ? 'intro-overlay--mobile' : ''}`} role="status" aria-label="Opening portfolio" onAnimationEnd={(event) => { if (event.target === event.currentTarget) setVisible(false) }}>
-      <button type="button" className="intro-skip" onClick={() => setVisible(false)}>Skip intro</button>
+    <div className={`intro-overlay ${mobile ? 'intro-overlay--mobile' : ''}`} role="status" aria-label="Opening portfolio" onAnimationEnd={(event) => { if (event.target === event.currentTarget) completeIntro() }}>
+      <button type="button" className="intro-skip" onClick={completeIntro}>Skip intro</button>
       <div className="intro-stage">
         <div className="intro-orbital" aria-hidden="true">
           <div className="intro-orbital__glow" />

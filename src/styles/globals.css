@@ -119,6 +119,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
   to { background-position: 0% 50%; }
 }
 
+.portfolio-reveal {
+  animation: portfolio-reveal .9s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+@keyframes portfolio-reveal {
+  from { opacity: .18; }
+  45% { opacity: .7; }
+  to { opacity: 1; }
+}
+
 #root { position: relative; isolation: isolate; }
 
 .webgl-background {
@@ -329,6 +339,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
     animation-iteration-count: 1 !important;
   }
   .webgl-background, .scroll-progress { display: none; }
-  .ambient-background::before, .section-shell::before, .hero-name-accent { animation: none; }
+  .ambient-background::before, .section-shell::before, .hero-name-accent, .portfolio-reveal { animation: none; }
   .interactive-card:hover, .premium-lift:hover, .premium-lift[data-pointer-hover="true"], .premium-lift:focus-within { transform: none !important; }
 }
