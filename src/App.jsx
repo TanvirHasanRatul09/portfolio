@@ -20,7 +20,9 @@ function ExternalLink({ href, children, className = '' }) {
 
 function App() {
   const [webglAvailable, setWebglAvailable] = useState(supportsWebGL)
+  const [revealPortfolio, setRevealPortfolio] = useState(false)
   const handleAvailability = useCallback((available) => setWebglAvailable(available), [])
+  const handleIntroComplete = useCallback(() => setRevealPortfolio(true), [])
   const socialLinksLink = socialLinks.facebook
 
   return (
@@ -30,8 +32,9 @@ function App() {
       <WebGLBackground onAvailabilityChange={handleAvailability} />
       <DeferredMotion />
       <div className="scroll-progress" aria-hidden="true"><span className="scroll-progress__bar" /></div>
+      <CinematicIntro webglAvailable={webglAvailable} onComplete={handleIntroComplete} />
+      <div className={revealPortfolio ? 'portfolio-reveal' : undefined}>
       <Header />
-      <CinematicIntro webglAvailable={webglAvailable} />
 
       <main id="main-content">
         <section id="hero" className="site-container relative flex min-h-dvh scroll-mt-20 items-center pb-16 pt-[calc(5.5rem+env(safe-area-inset-top))] sm:pb-20 lg:pt-24">
@@ -53,7 +56,7 @@ function App() {
             </div>
 
             <div className="order-1 flex justify-center lg:order-2">
-              <div className="portrait-frame relative size-[clamp(12rem,53vw,21rem)] rounded-[42%_58%_50%_50%/48%_46%_54%_52%] p-[2px]">
+              <div className="portrait-frame relative size-[clamp(12rem,53vw,21rem)] rounded-full p-[2px]">
                 <div className="h-full w-full overflow-hidden rounded-[inherit] bg-zinc-900">
                   <img src="/profile.jpeg" alt="Tanvir Hasan Ratul" width="672" height="672" decoding="async" fetchPriority="high" className="h-full w-full object-cover object-center" />
                 </div>
@@ -95,7 +98,7 @@ function App() {
           <div className="site-container">
             <SectionHeading eyebrow="03 / Selected work" title="Projects built around real problems." description="Backend systems, data products, and collaborative applications—from live monitoring to operational tools." />
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {projects.map((project, index) => <Card key={project.title} className={`premium-lift group flex min-h-[22rem] flex-col p-6 ${project.featured ? 'md:col-span-1 xl:col-span-1 border-rose-900/40 bg-gradient-to-b from-rose-950/20 to-zinc-900/55' : ''}`}><div className="flex items-start justify-between gap-4"><span className="font-mono text-xs text-zinc-600">{String(index + 1).padStart(2, '0')}</span>{project.featured && <Badge className="border-rose-500/20 text-rose-300">Featured</Badge>}</div><h3 className="mt-8 font-display text-xl font-semibold tracking-tight text-white">{project.title}</h3><p className="mt-4 text-sm leading-6 text-zinc-300">{project.description}</p>{project.details && <ul className="mt-4 flex-1 space-y-2 text-sm leading-5 text-zinc-400">{project.details.map((detail) => <li key={detail} className="relative pl-4 before:absolute before:left-0 before:top-[.55rem] before:size-1 before:rounded-full before:bg-violet-400">{detail}</li>)}</ul>}<div className="mt-6 flex flex-wrap gap-1.5">{project.technologies.map((tech) => <Badge key={tech}>{tech}</Badge>)}</div><ExternalLink href={project.href} className="project-link mt-7 inline-flex min-h-11 items-center gap-2 self-start text-sm font-semibold text-zinc-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"><Github size={17} aria-hidden="true" />{project.searchLink ? 'Find repository' : 'View repository'} <ArrowUpRight size={16} aria-hidden="true" /></ExternalLink></Card>)}
+              {projects.map((project, index) => <Card key={project.title} className={`premium-lift group flex min-h-[22rem] flex-col p-6 ${project.featured ? 'md:col-span-1 xl:col-span-1 border-rose-900/40 bg-gradient-to-b from-rose-950/20 to-zinc-900/55' : ''}`}><div className="flex items-start justify-between gap-4"><span className="font-mono text-xs text-zinc-600">{String(index + 1).padStart(2, '0')}</span>{project.featured && <Badge className="border-rose-500/20 text-rose-300">{project.latest ? 'Latest' : 'Featured'}</Badge>}</div><h3 className="mt-8 font-display text-xl font-semibold tracking-tight text-white">{project.title}</h3><p className="mt-4 text-sm leading-6 text-zinc-300">{project.description}</p>{project.details && <ul className="mt-4 flex-1 space-y-2 text-sm leading-5 text-zinc-400">{project.details.map((detail) => <li key={detail} className="relative pl-4 before:absolute before:left-0 before:top-[.55rem] before:size-1 before:rounded-full before:bg-violet-400">{detail}</li>)}</ul>}<div className="mt-6 flex flex-wrap gap-1.5">{project.technologies.map((tech) => <Badge key={tech}>{tech}</Badge>)}</div><ExternalLink href={project.href} className="project-link mt-7 inline-flex min-h-11 items-center gap-2 self-start text-sm font-semibold text-zinc-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"><Github size={17} aria-hidden="true" />{project.searchLink ? 'Find repository' : 'View repository'} <ArrowUpRight size={16} aria-hidden="true" /></ExternalLink></Card>)}
             </div>
           </div>
         </section>
@@ -115,11 +118,12 @@ function App() {
         </section>
 
         <section id="contact" className="section-shell pb-16 sm:pb-24">
-          <div className="site-container"><Card className="relative overflow-hidden p-7 sm:p-12"><div className="contact-glow" aria-hidden={true} /><div className="relative max-w-3xl"><p className="font-mono text-xs uppercase tracking-[.2em] text-rose-400">06 / Contact</p><h2 className="mt-5 font-display text-[clamp(2.35rem,8vw,5rem)] font-bold leading-[.98] tracking-[-.055em] text-white">Let&apos;s build something dependable.</h2><p className="mt-6 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg">I&apos;m looking for opportunities to contribute to thoughtful software teams and strengthen my backend engineering practice.</p><div className="mt-8 flex flex-wrap gap-3"><Button asChild><a href="mailto:tanvirhasan58p@gmail.com"><Mail size={17} aria-hidden="true" /> Email me</a></Button><Button variant="outline" asChild><a href="tel:+8801608776259"><Phone size={17} aria-hidden="true" /> Call me</a></Button><Button variant="outline" asChild><a href="/Tanvir-Hasan-Ratul-Resume.pdf" target="_blank" rel="noreferrer"><FileText size={17} aria-hidden="true" /> View Resume</a></Button><Button variant="outline" asChild><a href="/Tanvir-Hasan-Ratul-Resume.pdf" download="Tanvir-Hasan-Ratul-Resume.pdf"><Download size={17} aria-hidden="true" /> Download Resume</a></Button></div><Separator className="my-8" /><div className="flex flex-col gap-4 text-sm text-zinc-400 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6"><span className="inline-flex items-center gap-2"><MapPin size={16} aria-hidden="true" /> Narayanganj, Dhaka, Bangladesh</span><a className="inline-flex min-h-11 items-center gap-2 hover:text-white" href="mailto:tanvirhasan58p@gmail.com"><Mail size={16} aria-hidden="true" /> tanvirhasan58p@gmail.com</a><a className="inline-flex min-h-11 items-center gap-2 hover:text-white" href="tel:+8801608776259"><Phone size={16} aria-hidden="true" /> 01608776259</a></div><div className="mt-7 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap"><SocialLink href={socialLinks.github} label="GitHub"><Github /></SocialLink><SocialLink href={socialLinks.linkedin} label="LinkedIn"><Linkedin /></SocialLink><SocialLink href={socialLinksLink} label="Facebook"><Facebook /></SocialLink><SocialLink href={socialLinks.whatsapp} label="WhatsApp"><MessageCircle /></SocialLink></div></div></Card></div>
+          <div className="site-container"><Card className="relative overflow-hidden p-7 sm:p-12"><div className="contact-glow" aria-hidden={true} /><div className="relative max-w-3xl"><p className="font-mono text-xs uppercase tracking-[.2em] text-rose-400">06 / Contact</p><h2 className="mt-5 font-display text-[clamp(2.35rem,8vw,5rem)] font-bold leading-[.98] tracking-[-.055em] text-white">Let&apos;s build something dependable.</h2><p className="mt-6 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg">I&apos;m looking for opportunities to contribute to thoughtful software teams and strengthen my backend engineering practice.</p><div className="mt-8 flex flex-wrap gap-3"><Button asChild><a href="https://mail.google.com/mail/?view=cm&fs=1&to=tanvirhasan58p%40gmail.com" target="_blank" rel="noreferrer"><Mail size={17} aria-hidden="true" /> Email me</a></Button><Button variant="outline" asChild><a href="tel:+8801608776259"><Phone size={17} aria-hidden="true" /> Call me</a></Button><Button variant="outline" asChild><a href="/Tanvir-Hasan-Ratul-Resume.pdf" target="_blank" rel="noreferrer"><FileText size={17} aria-hidden="true" /> View Resume</a></Button><Button variant="outline" asChild><a href="/Tanvir-Hasan-Ratul-Resume.pdf" download="Tanvir-Hasan-Ratul-Resume.pdf"><Download size={17} aria-hidden="true" /> Download Resume</a></Button></div><Separator className="my-8" /><div className="flex flex-col gap-4 text-sm text-zinc-400 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6"><span className="inline-flex items-center gap-2"><MapPin size={16} aria-hidden="true" /> Narayanganj, Dhaka, Bangladesh</span><a className="inline-flex min-h-11 items-center gap-2 hover:text-white" href="mailto:tanvirhasan58p@gmail.com"><Mail size={16} aria-hidden="true" /> tanvirhasan58p@gmail.com</a><a className="inline-flex min-h-11 items-center gap-2 hover:text-white" href="tel:+8801608776259"><Phone size={16} aria-hidden="true" /> 01608776259</a></div><div className="mt-7 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap"><SocialLink href={socialLinks.github} label="GitHub"><Github /></SocialLink><SocialLink href={socialLinks.linkedin} label="LinkedIn"><Linkedin /></SocialLink><SocialLink href={socialLinksLink} label="Facebook"><Facebook /></SocialLink><SocialLink href={socialLinks.whatsapp} label="WhatsApp"><MessageCircle /></SocialLink></div></div></Card></div>
         </section>
       </main>
 
       <footer className="border-t border-white/[0.08] py-7"><div className="site-container flex flex-col gap-2 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between"><p>© 2026 Tanvir Hasan Ratul.</p><p className="font-mono text-xs">Designed for clarity. Built for reliability.</p></div></footer>
+      </div>
     </div>
   )
 }
