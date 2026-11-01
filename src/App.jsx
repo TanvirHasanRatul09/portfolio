@@ -110,9 +110,10 @@ function App() {
         <section id="certifications" className="section-shell">
           <div className="site-container">
             <SectionHeading eyebrow="05 / Credentials" title="Learning beyond the classroom." />
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               <Card className="premium-lift p-6 sm:p-8"><p className="font-mono text-xs uppercase tracking-[.18em] text-violet-300">Leadership & activities</p><ul className="mt-6 space-y-5 text-zinc-300"><li className="border-l border-rose-700 pl-5"><strong className="block text-white">Deputy Coordinator</strong><span className="text-sm text-zinc-400">Department of Publication — AUST PIC</span></li><li className="border-l border-white/10 pl-5"><strong className="block text-white">Member</strong><span className="text-sm text-zinc-400">Josephite Math Club</span></li></ul></Card>
               <Card className="premium-lift p-6 sm:p-8"><p className="font-mono text-xs uppercase tracking-[.18em] text-violet-300">Certifications</p><ul className="mt-6 space-y-5 text-zinc-300"><li className="border-l border-rose-700 pl-5"><strong className="block text-white">Google Prompting Essentials</strong><span className="text-sm text-zinc-400">Coursera specialization</span></li><li className="border-l border-white/10 pl-5"><strong className="block text-white">Data Analytics</strong><span className="text-sm text-zinc-400">Excel · Power BI · Python · SQL — Tutorials Point Bangladesh</span></li></ul></Card>
+              <Card className="premium-lift p-6 sm:p-8"><p className="font-mono text-xs uppercase tracking-[.18em] text-violet-300">Achievements</p><ul className="mt-6 space-y-5 text-zinc-300"><li className="border-l border-rose-700 pl-5"><strong className="block text-white">GP FutureMakers 2026</strong><span className="mt-1 block text-sm leading-6 text-zinc-400">Advanced to Round 2 as one of 118 teams selected from 1,130 participating teams.</span></li></ul></Card>
             </div>
           </div>
         </section>
